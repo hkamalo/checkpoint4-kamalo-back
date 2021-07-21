@@ -2,7 +2,7 @@
   "name": "checkpoint4-back",
   "version": "1.0.0",
   "description": "api directory",
-  "main": "index.js",
+  "main": "app.js",
   "repository": "https://github.com/hkamalo/checkpoint4-kamalo-back",
   "author": "Heranca <heranca.kamalo@gmail.com>",
   "license": "MIT",
@@ -31,7 +31,8 @@
     "pg-promise": "^10.10.2",
     "prisma": "2.25.0",
     "shelljs": "^0.8.4",
-    "socket.io": "^4.1.3"
+    "socket.io": "^4.1.3",
+    "uniqid": "^5.3.0"
   },
   "scripts": {
     "start:watch": "nodemon app.js",
