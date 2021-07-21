@@ -20,10 +20,7 @@ app.use(express.json());
 app.set('x-powered-by', false); // for security
 app.set('trust proxy', 1); // trust first proxy
 
-// initRoutes(app);
-
 // process setup : improves error reporting
-
 process.on('unhandledRejection', (error) => {
   console.error('unhandledRejection', JSON.stringify(error), error.stack);
 });
@@ -34,16 +31,21 @@ process.on('uncaughtException', (error) => {
 
 // ------------------------- Server Lunching ------------------------------------------- //
 
-// eslint-disable-next-line no-unused-vars
+
 const messages = [
   { id: uniqid(), author: 'server', text: 'welcome to WildChat' },
  ];
  
  io.on('connect', (socket) => {
+   // send messages list on connection
   console.log('user connected');
+  
+  // handle client leaving
   socket.on('disconnect', () => {
     console.log('user disconnected');
   });
+  
+  socket.emit('initialMessageList', messages);
 });
 
 
