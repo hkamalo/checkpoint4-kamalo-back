@@ -39,13 +39,22 @@ const messages = [
  io.on('connect', (socket) => {
    // send messages list on connection
   console.log('user connected');
+  socket.emit('initialMessageList', messages);
+  
+  // handle message from client side
+  socket.on('messageFromClient', (messageTextAndAuthor) => {
+    const newMessage = {id: uniqid(), ...messageTextAndAuthor}
+    console.log('new message from a client: ', newMessage)
+    messages.push(newMessage);
+    return messages;
+  })
+  
   
   // handle client leaving
   socket.on('disconnect', () => {
     console.log('user disconnected');
   });
   
-  socket.emit('initialMessageList', messages);
 });
 
 
