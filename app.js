@@ -1,19 +1,17 @@
 const express = require('express');
-const socketIO = require('socket.io');
-
-const uniqid = require('uniqid');
 
 const app = express();
 const server = app.listen(3001);
+
+
+
 require('dotenv').config();
+require('./socketMessenger')();
+
 
 // ------------------------- Security ------------------------------------------- //
 
-// socket cors
 
-const io = socketIO(server, {
-  cors: { origin:['http://localhost:3000'] }
-});
 
 // security parameters
 app.use(express.json());
@@ -32,29 +30,6 @@ process.on('uncaughtException', (error) => {
 // ------------------------- Server Lunching ------------------------------------------- //
 
 
-const messages = [
-  { id: uniqid(), author: 'server', text: 'welcome to WildChat' },
- ];
- 
- io.on('connect', (socket) => {
-   // send messages list on connection
-  console.log('user connected');
-  socket.emit('MessageList', messages);
-  // handle message from client side
-  socket.on('messageFromClient', (messageTextAndAuthor) => {
-    const newMessage = {id: uniqid(), ...messageTextAndAuthor}
-    console.log('new message from a client: ', newMessage)
-    messages.push(newMessage);
-    io.emit('MessageList', messages);
-  })
-  
-  
-  // handle client leaving
-  socket.on('disconnect', () => {
-    console.log('user disconnected');
-  });
-  
-});
 
 
 
