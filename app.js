@@ -1,4 +1,5 @@
 const express = require('express');
+const cookieSession = require('cookie-session')
 
 const app = express();
 const server = app.listen(3001);
@@ -9,6 +10,13 @@ require('./routes')(app);
 require('dotenv').config();
 require('./socketMessenger')(server);
 
+app.use(cookieSession({
+  name: 'session',
+  keys: [/* secret keys */],
+
+  // Cookie Options
+  maxAge: 24 * 60 * 60 * 1000 // 24 hours
+}))
 
 // ------------------------- Security ------------------------------------------- //
 

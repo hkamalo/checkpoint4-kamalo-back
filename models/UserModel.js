@@ -18,10 +18,18 @@ const createNewUser = (username, hashedPassword) =>
   prisma.user.create({
     data: { username, hashedPassword },
   });
-  
-const findUser = (username) =>
+
+const findUsernameInDB = (username) =>
   prisma.user.findUnique({
     where: { username },
+    
   });
 
-module.exports = { findUser, hashPassword, verifyPassword, createNewUser };
+  const usernameAlreadyInDB = async (newUsername) => {
+      const usernameInDb = await findUser(newUsername);
+
+      if(!usernameInDb) return false;
+      return true 
+  };
+
+module.exports = { findUsernameInDB, hashPassword, verifyPassword, createNewUser, usernameAlreadyInDB };

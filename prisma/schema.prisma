@@ -31,3 +31,9 @@ model messages {
   receiverId  Int      @db.Integer
   sendingDate DateTime @db.Timestamp(6)
 }
+
+model session {
+  sessionId        String   @id @db.VarChar(255)
+  sessObject Json
+  expire     DateTime @db.Timestamp(6)
+}
