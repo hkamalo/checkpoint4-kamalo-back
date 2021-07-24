@@ -2,11 +2,12 @@ const express = require('express');
 
 const app = express();
 const server = app.listen(3001);
+app.use(express.json());
 
-
+require('./routes')(app);
 
 require('dotenv').config();
-require('./socketMessenger')();
+require('./socketMessenger')(server);
 
 
 // ------------------------- Security ------------------------------------------- //
@@ -14,7 +15,6 @@ require('./socketMessenger')();
 
 
 // security parameters
-app.use(express.json());
 app.set('x-powered-by', false); // for security
 app.set('trust proxy', 1); // trust first proxy
 

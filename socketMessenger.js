@@ -1,17 +1,10 @@
-const express = require('express');
 
-const app = express();
-const server = app.listen(3001);
 const socketIO = require('socket.io');
 
 // Models
 const MessagesModel = require('./models/MessagesModel');
 const UserModel = require('./models/UserModel');
 
-// socket cors
-const io = socketIO(server, {
-  cors: { origin: ['http://localhost:3000'] },
-});
 
 // helper : take all message from the database
 const messagesList = async (senderId, receiverId) => {
@@ -23,7 +16,13 @@ const messagesList = async (senderId, receiverId) => {
 // --------------------------- function to handle the chat --------------------------------- //
 
 
-function messenger() {
+function messenger(server) {
+  
+  // socket cors
+  const io = socketIO(server, {
+    cors: { origin: ['http://localhost:3000'] },
+  });
+  
   // instant message send to the client
   const chatMessages = [];
 
